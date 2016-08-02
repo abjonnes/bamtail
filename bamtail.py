@@ -9,11 +9,18 @@ import sys
 
 
 def gunzip_chunk(byte_stream):
+    """interpret a byte string as a gzipped chunk and return its
+    unzipped contents
+    """
     byte_stream = StringIO.StringIO(byte_stream)
     return gzip.GzipFile(fileobj=byte_stream).read()
 
 
 def get_bam_chunk(filename, size, tailsize=100000):
+    """find the final (or, in rare cases, penultimate) gzipped chunk in the BAM
+    file and return its unzipped contents
+    """
+
     with open(filename, 'rb') as bamfile:
         bamfile.seek(size-tailsize)
         tail = bamfile.read()
@@ -26,6 +33,10 @@ def get_bam_chunk(filename, size, tailsize=100000):
 
 
 def final_record_position(bam_data):
+    """find the reference index and position of the final record in the BAM
+    chunk
+    """
+
     while True:
         block_size, ref_id, pos = struct.unpack_from('<3i', bam_data)
         bam_data = bam_data[block_size+4:]
@@ -36,6 +47,10 @@ def final_record_position(bam_data):
 
 
 def get_bam_ref_sequences(filename, headsize=100000):
+    """read the list of reference sequence names from the beginning of the BAM
+    file
+    """
+
     with open(filename, 'rb') as bamfile:
         head = bamfile.read(headsize)
     fields = struct.unpack_from('<4BI2BH2B2H', head)
@@ -57,6 +72,10 @@ def get_bam_ref_sequences(filename, headsize=100000):
 
 
 def process_file(filename):
+    """find the chromosome and position of the final record in the final
+    chunk of the BAM file
+    """
+
     ref_sequences = get_bam_ref_sequences(filename)
     size = os.path.getsize(filename)
     bam_data = get_bam_chunk(filename, size)
@@ -71,6 +90,8 @@ def process_file(filename):
 
 
 def main(filenames):
+    """perform the tail operation on all given arguments"""
+
     for filename in filenames:
         if len(filenames) > 1:
             print '{}: '.format(filename),
