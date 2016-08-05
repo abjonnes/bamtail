@@ -1,9 +1,22 @@
+import argparse
 import gzip
 import os
 import re
 import StringIO
 import struct
 import sys
+
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(description='tail for BAMs')
+    parser.add_argument(
+        'filenames',
+        help='BAMs on which to perform the tail operation',
+        nargs='+',
+        metavar='FILE'
+    )
+
+    return parser.parse_args()
 
 
 def gunzip_chunk(byte_stream):
@@ -86,17 +99,15 @@ def process_file(filename):
         return '{}:{}'.format(chr, pos)
 
 
-
 def main(filenames):
-    """perform the tail operation on all given arguments"""
+    """perform the tail operation on all given filenames"""
 
     for filename in filenames:
         if len(filenames) > 1:
             print '{}: '.format(filename),
         print process_file(filename)
 
-if __name__ == '__main__':
-    import sys
 
-    filenames = sys.argv[1:]
-    main(filenames)
+if __name__ == '__main__':
+    args = parse_arguments()
+    main(args.filenames)
