@@ -35,4 +35,5 @@ python setup.py install
 
 Changelog
 ---------
-- compatibility with py2
+- add compatibility with py2
+- add -q/--quiet option to suppress filename output in all cases

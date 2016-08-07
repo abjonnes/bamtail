@@ -45,6 +45,12 @@ def parse_arguments():
         metavar='FILE'
     )
     parser.add_argument(
+        '--quiet',
+        '-q',
+        help='suppress output of filenames',
+        action='store_true'
+    )
+    parser.add_argument(
         '--version',
         '-v',
         help='print the version',
@@ -213,10 +219,11 @@ def main():
     args = parse_arguments()
     if args.version:
         print('bamtail version {}'.format(__version__))
+        sys.exit(0)
     if not args.filenames:
         sys.exit(0)
     for filename in args.filenames:
-        if len(args.filenames) > 1:
+        if len(args.filenames) > 1 and not args.quiet:
             print('{}: '.format(filename), end='')
         print(process_file(filename))
 
