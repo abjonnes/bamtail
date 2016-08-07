@@ -1,11 +1,9 @@
-bamtail
-=======
+# bamtail
 
 A simple tool to quickly tell you about the final-ish alignment present in a [BAM file](http://genome.sph.umich.edu/wiki/BAM) at runtime. This is useful for monitoring progress as a large, position-sorted BAM file is being generated. Since BAM files are compressed, ``tail`` is not useful for this! ``bamtail`` is compatible with both ``python2`` and ``python3``.
 
 
-Usage
------
+## Usage
 
 ```
 $ bamtail sample1.bam
@@ -18,8 +16,7 @@ sample4.bam: chr14:1045735
 ```
 
 
-Installation
-------------
+## Installation
 
 You can install with `pip`:
 ```
@@ -33,7 +30,11 @@ python setup.py install
 ```
 
 
-Changelog
----------
+## Changelog
+
+### v1.1
 - add compatibility with py2
 - add -q/--quiet option to suppress filename output in all cases
+
+### v1.0
+- initial version
