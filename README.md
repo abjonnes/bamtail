@@ -1,7 +1,7 @@
 bamtail
 =======
 
-A simple tool to quickly (!) tell you about the final-ish alignment present in a [BAM file](http://genome.sph.umich.edu/wiki/BAM) at runtime. This is useful for monitoring progress as a large, position-sorted BAM file is being generated. Since BAM files are compressed, ``tail`` is not useful for this! ``bamtail`` runs on ``python3``.
+A simple tool to quickly tell you about the final-ish alignment present in a [BAM file](http://genome.sph.umich.edu/wiki/BAM) at runtime. This is useful for monitoring progress as a large, position-sorted BAM file is being generated. Since BAM files are compressed, ``tail`` is not useful for this! ``bamtail`` runs on ``python3``.
 
 
 Usage
@@ -31,3 +31,7 @@ git clone https://github.com/abjonnes/bamtail.git
 cd bamtail
 python3 setup.py install
 ```
+
+
+Changelog
+---------

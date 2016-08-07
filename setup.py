@@ -2,9 +2,11 @@
 
 from setuptools import setup
 
+from bamtail import __version__
+
 setup(
     name='bamtail',
-    version='1.0',
+    version=__version__,
     description='tail for BAM files',
     author='Andrew Bjonnes',
     author_email='andrew@abjonnes.com',

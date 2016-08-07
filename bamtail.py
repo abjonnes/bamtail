@@ -21,7 +21,7 @@ https://samtools.github.io/hts-specs/SAMv1.pdf
 
 """
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 
 def parse_arguments():
