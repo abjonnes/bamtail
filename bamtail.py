@@ -1,13 +1,20 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+from __future__ import print_function
+
 import argparse
 import gzip
-import io
 import os
 import re
 import struct
 import sys
+
+# py2/3 compatibility
+try:
+    from io import BytesIO
+except ImportError:
+    from StringIO import StringIO as BytesIO
 
 
 """Perform a ``tail``-like operation on BAM files.
@@ -59,7 +66,7 @@ def decompress_block(byte_stream):
     Returns:
         Bytes representing the decompressed block.
     """
-    byte_stream = io.BytesIO(byte_stream)
+    byte_stream = BytesIO(byte_stream)
     return gzip.GzipFile(fileobj=byte_stream).read()
 
 
