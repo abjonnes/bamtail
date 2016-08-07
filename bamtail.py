@@ -2,9 +2,9 @@
 
 import argparse
 import gzip
+import io
 import os
 import re
-import StringIO
 import struct
 import sys
 
@@ -58,7 +58,7 @@ def decompress_block(byte_stream):
     Returns:
         Bytes representing the decompressed block.
     """
-    byte_stream = StringIO.StringIO(byte_stream)
+    byte_stream = io.BytesIO(byte_stream)
     return gzip.GzipFile(fileobj=byte_stream).read()
 
 
@@ -123,7 +123,6 @@ def final_alignment_position(bam_data):
     return ref_id, pos
 
 
-
 def get_bam_ref_sequences(filename, headsize=64000):
     """Read the list of reference sequence names from the beginning of the BAM
     file.
@@ -157,7 +156,7 @@ def get_bam_ref_sequences(filename, headsize=64000):
 
     offset = 0  # keep track how much data we've read
     magic, l_text = struct.unpack_from('<4si', bam_data)
-    if magic != 'BAM\x01':  # magic string
+    if magic != b'BAM\x01':  # magic string
         raise RuntimeError('{} appears to not be a BAM file'.format(filename))
     offset += 8 + l_text
     n_ref, = struct.unpack_from('<i', bam_data, offset)
@@ -191,8 +190,8 @@ def process_file(filename):
     if chr == -1:
         return 'unmapped'
     else:
-        chr = ref_sequences[chr]
-        pos += 1
+        chr = ref_sequences[chr].decode('utf-8')
+        pos += 1  # BAM positions are 0-indexed
         return '{}:{}'.format(chr, pos)
 
 
@@ -205,8 +204,8 @@ def main(filenames):
     """
     for filename in filenames:
         if len(filenames) > 1:
-            print '{}: '.format(filename),
-        print process_file(filename)
+            print('{}: '.format(filename), end='')
+        print(process_file(filename))
 
 
 if __name__ == '__main__':
@@ -215,3 +214,4 @@ if __name__ == '__main__':
         print('bamtail version {}'.format(__version__))
     if args.filenames:
         main(args.filenames)
+
