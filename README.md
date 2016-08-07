@@ -21,8 +21,13 @@ sample4.bam: chr14:1045735
 Installation
 ------------
 
+You can install with `pip3`:
 ```
-$ git clone https://github.com/abjonnes/bamtail.git
-$ cd bamtail
-$ python3 setup.py install
+pip3 install https://github.com/abjonnes/bamtail/tarball/master
+```
+Or, with `setuptools` installed:
+```
+git clone https://github.com/abjonnes/bamtail.git
+cd bamtail
+python3 setup.py install
 ```
