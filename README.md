@@ -16,3 +16,13 @@ sample2.bam: chr3:23469490
 sample3.bam: unmapped
 sample4.bam: chr14:1045735
 ```
+
+
+Installation
+------------
+
+```
+$ git clone https://github.com/abjonnes/bamtail.git
+$ cd bamtail
+$ python3 setup.py install
+```
