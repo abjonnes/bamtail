@@ -196,23 +196,24 @@ def process_file(filename):
         return '{}:{}'.format(chr, pos)
 
 
-def main(filenames):
+def main():
     """Perform the tail operation on all given BAMs. If more than one BAM is
     given, prefix the output with the filename.
 
     Args:
         filenames: A sequence of paths to BAMs on which to perform tail.
     """
-    for filename in filenames:
-        if len(filenames) > 1:
+    args = parse_arguments()
+    if args.version:
+        print('bamtail version {}'.format(__version__))
+    if not args.filenames:
+        sys.exit(0)
+    for filename in args.filenames:
+        if len(args.filenames) > 1:
             print('{}: '.format(filename), end='')
         print(process_file(filename))
 
 
 if __name__ == '__main__':
-    args = parse_arguments()
-    if args.version:
-        print('bamtail version {}'.format(__version__))
-    if args.filenames:
-        main(args.filenames)
+    main()
 
